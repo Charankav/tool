@@ -1,35 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Citation Generator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 50px;
-    }
-    input, button {
-      padding: 10px;
-      margin-top: 10px;
-      width: 100%;
-      max-width: 600px;
-      font-size: 16px;
-    }
-    pre {
-      background-color: #f4f4f4;
-      padding: 15px;
-      margin-top: 20px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      border-left: 4px solid #888;
-    }
-  </style>
-</head>
 <body>
 
   <h2>Wikimedia Citation Generator</h2>
   <input type="text" id="urlInput" placeholder="Paste the URL here">
   <button onclick="generateCitation()">Generate Citation</button>
+  <button onclick="copyCitation()">Copy</button>
 
   <pre id="output"></pre>
 
@@ -50,7 +24,17 @@
         document.getElementById("output").textContent = "Invalid URL.";
       }
     }
+
+    function copyCitation() {
+      const output = document.getElementById("output");
+      const text = output.textContent;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Citation copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy text: " + err);
+      });
+    }
   </script>
 
 </body>
-</html>
