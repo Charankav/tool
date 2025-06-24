@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Citation Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 600px;
+      font-size: 16px;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 15px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      border-left: 4px solid #888;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Wikimedia Citation Generator</h2>
+  <input type="text" id="urlInput" placeholder="Paste the URL here">
+  <button onclick="generateCitation()">Generate Citation</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    function generateCitation() {
+      const url = document.getElementById("urlInput").value;
+      if (!url) return;
+
+      try {
+        const domain = new URL(url).hostname.replace("www.", "").toUpperCase();
+        const now = new Date();
+        const month = now.toLocaleString('default', { month: 'long' });
+        const dateStr = `${month} ${now.getDate()}, ${now.getFullYear()}`;
+
+        const citation = `<ref>{{Cite interview|title=${domain} |url=${url} |date=${dateStr}}}</ref>`;
+        document.getElementById("output").textContent = citation;
+      } catch (e) {
+        document.getElementById("output").textContent = "Invalid URL.";
+      }
+    }
+  </script>
+
+</body>
+</html>
